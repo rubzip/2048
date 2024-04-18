@@ -4,7 +4,7 @@ class Board:
     def __init__(self, N: int=4, grid: np.array=None) -> None:
         if grid is None:
             self.N = N
-            self.grid = np.zeros([N, N], np.int8)
+            self.grid = np.zeros([N, N], np.int16)
             self.add_2()
         else:
             self.N = len(grid)
@@ -116,6 +116,7 @@ class Board:
         if movement in self.possible_moves:
             self.grid = self.results[movement]
         else:
-            raise Exception(f"Movement {movement} is not allowed, try with: {self.possible_moves}")
+            # raise Exception(f"Movement {movement} is not allowed, try with: {self.possible_moves}")
+            print(f"Movement {movement} is not allowed, try with: {self.possible_moves}")
         if return_values:
             return self.grid
