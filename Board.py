@@ -5,10 +5,13 @@ class Board:
         if grid is None:
             self.N = N
             self.grid = np.zeros([N, N], np.int8)
+            self.add_2()
         else:
             self.N = len(grid)
             self.grid = grid
-        self.check_possible_moves()
+
+        self.possible_moves, self.results = self.check_possible_moves(return_values=True)
+        self.game_over = self.is_game_over(return_values=True)
     
     def add_2(self, return_values=False) -> bool:
         possible = self.grid==0
@@ -57,8 +60,8 @@ class Board:
         n = len(v_z)
         for i in range(n-1, 0, -1):
             if v_z[i]==v_z[i-1]:
-                v_z[i-1] *= 2
-                v_z[i] = 0
+                v_z[i] *= 2
+                v_z[i-1] = 0
         # Remove zeros
         v_z = v_z[v_z!=0]
         n = len(v_z)
