@@ -18,8 +18,10 @@ class Game:
         self.BACKGROUND_COLOR = BACKGROUND_COLOR
         self.FONT_COLOR = FONT_COLOR
 
-        self.COLORS = COLORS
         self.BOXES_COLORS = BOXES_COLORS
+        self.DIGITS = {i: 2**i for i in range(1, 10)} # STORED FOR MAKING IT MORE EFFICENT
+
+        self.TIME_SLEEP = TIME_SLEEP
 
         self.board = Board()
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -40,17 +42,17 @@ class Game:
     def draw_box(self, row, col):
         n = self.board.grid[row, col]
         if n!=0:
-            color = BOXES_COLORS[n]
-            x = col * RECT_WIDTH
-            y = row * RECT_HEIGHT
+            color = self.BOXES_COLORS[n-1]
+            x = col * self.RECT_WIDTH
+            y = row * self.RECT_HEIGHT
                 
-            pygame.draw.rect(self.window, color, (x, y, RECT_WIDTH, RECT_HEIGHT))
-            text = FONT.render(str(n), 1, FONT_COLOR)
+            pygame.draw.rect(self.window, color, (x, y, self.RECT_WIDTH, self.RECT_HEIGHT))
+            text = FONT.render(str(2**(n-1)), 1, self.FONT_COLOR)
             self.window.blit(
                 text, 
                 (
-                    x + (RECT_WIDTH - text.get_width())//2,
-                    y + (RECT_HEIGHT - text.get_height())//2
+                    x + (self.RECT_WIDTH - text.get_width())//2,
+                    y + (self.RECT_HEIGHT - text.get_height())//2
                 ),
             )
     
@@ -87,6 +89,8 @@ class Game:
                 self.board.check_possible_moves()
                 self.board.is_game_over()
                 print(self.board.grid)
+                pygame.time.wait(self.TIME_SLEEP)
+        
 
 
 game = Game()

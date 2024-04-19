@@ -15,7 +15,7 @@ OUTLINE_COLOR = (187, 173, 160)
 BACKGROUND_COLOR = (205, 192, 180)
 FONT_COLOR = (119, 110, 101)
 
-COLORS = [
+LIST_OF_COLORS = [
         (237, 229, 218),
         (238, 225, 201),
         (243, 178, 122),
@@ -29,4 +29,6 @@ COLORS = [
 
 BOXES_COLORS = defaultdict(lambda : (236, 202, 80))
 for i in range(1, 10):
-    BOXES_COLORS[2**i] = COLORS[i-1]
+    BOXES_COLORS[i] = LIST_OF_COLORS[i-1]
+
+TIME_SLEEP = 30

@@ -4,7 +4,7 @@ class Board:
     def __init__(self, N: int=4, grid: np.array=None) -> None:
         if grid is None:
             self.N = N
-            self.grid = np.zeros([N, N], np.int16)
+            self.grid = np.zeros([N, N], np.int8)
             self.add_2()
         else:
             self.N = len(grid)
@@ -45,7 +45,7 @@ class Board:
         n = len(v_z)
         for i in range(n-1):
             if v_z[i]==v_z[i+1]:
-                v_z[i] *= 2
+                v_z[i] += 1
                 v_z[i+1] = 0
         # Remove zeros
         v_z = v_z[v_z!=0]
@@ -60,7 +60,7 @@ class Board:
         n = len(v_z)
         for i in range(n-1, 0, -1):
             if v_z[i]==v_z[i-1]:
-                v_z[i] *= 2
+                v_z[i] += 1
                 v_z[i-1] = 0
         # Remove zeros
         v_z = v_z[v_z!=0]
