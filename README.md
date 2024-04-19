@@ -16,5 +16,6 @@ python -u game.py
 ## 🕹️About the game
 
 ### 💡Game Logic
-All the game logic is implemented in the class (`Board`)[].
+All the game logic is implemented in the class `Board`.
+
 ### 🏗️Game Implementation
