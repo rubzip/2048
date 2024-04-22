@@ -1,4 +1,5 @@
 import numpy as np
+from collections import defaultdict
 
 class Board:
     def __init__(self, N: int=4, grid: np.array=None) -> None:
@@ -12,6 +13,8 @@ class Board:
 
         self.possible_moves, self.results = self.check_possible_moves(return_values=True)
         self.game_over = self.is_game_over(return_values=True)
+        self.POINTS = {n: (n-1)*(2**n) for n in range(1, 20)}
+        self.POINTS[0] = 0
     
     def add_2(self, return_values=False) -> bool:
         possible = self.grid==0
