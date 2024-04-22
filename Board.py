@@ -1,5 +1,4 @@
 import numpy as np
-from collections import defaultdict
 
 class Board:
     def __init__(self, N: int=4, grid: np.array=None) -> None:
