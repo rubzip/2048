@@ -19,3 +19,14 @@ python -u game.py
 All the game logic is implemented in the class `Board`.
 
 ### 🏗️Game Implementation
+
+
+### Reward Function
+#### Punctuation
+##### Logarithm Scale
+$\dfrac{log(punt + 1)}{log(punt\_max} \in [0,1]$
+##### Linear Scale
+
+#### Weights
+#### Num of Zeros
+#### 
