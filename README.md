@@ -33,7 +33,7 @@ $\displaystyle \dfrac{punt}{punt_{max})} \in [0,1]$
 $\displaystyle \dfrac{num_{zeros}}{max_{zeros})} \in [0,1]$
 
 #### 
-$\displaystyle 2 - \frac{1}{N}\sum _{i=1}^{N}f_{i}$
+$\displaystyle 2 - \frac{1}{N}\sum_{i=1}^{N}f_{i}$
 $\displaystyle \left \{ x_{i}: f_{i} \ \ \ \ \forall x_{i}\neq 0 \right \}$
 
 #### Weights
