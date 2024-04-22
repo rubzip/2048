@@ -1,7 +1,9 @@
 import pygame
 from Board import Board
-import sys
 from constants import *
+from datetime import datetime
+import os
+import csv
 
 
 class Game:
@@ -22,9 +24,20 @@ class Game:
         self.DIGITS = {i: 2**i for i in range(1, 10)} # STORED FOR MAKING IT MORE EFFICENT
 
         self.TIME_SLEEP = TIME_SLEEP
+        self.START_TIME = datetime.now().strftime("%y%m%d%H%M%S")
+        self.LOGS_FNAME = LOGS_FNAME
 
         self.board = Board()
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        self.logs = []
+    
+    def save_logs(self):
+        if not os.path.isdir(self.LOGS_FNAME):
+            os.mkdir(self.LOGS_FNAME)
+        
+        with open(os.path.join(self.LOGS_FNAME, self.START_TIME), 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerows(self.logs)
     
     def draw_background(self):
         self.window.fill(self.BACKGROUND_COLOR)

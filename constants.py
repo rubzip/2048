@@ -32,3 +32,4 @@ for i in range(1, 10):
     BOXES_COLORS[i] = LIST_OF_COLORS[i-1]
 
 TIME_SLEEP = 30
+LOGS_FNAME = "logs"
