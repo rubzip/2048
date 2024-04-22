@@ -103,7 +103,7 @@ class Game:
                 self.board.is_game_over()
                 print(self.board.grid)
                 pygame.time.wait(self.TIME_SLEEP)
-        
+        self.save_logs()
 
 
 game = Game()
