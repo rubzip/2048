@@ -26,7 +26,7 @@ All the game logic is implemented in the class `Board`.
 ##### Logarithm Scale
 $\displaystyle \dfrac{log(punt + 1)}{log(punt_{max})} \in [0,1]$
 ##### Linear Scale
-
+$\displaystyle \dfrac{punt}{punt_{max})} \in [0,1]$
 #### Weights
 #### Num of Zeros
 #### 
