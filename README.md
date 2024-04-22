@@ -24,7 +24,7 @@ All the game logic is implemented in the class `Board`.
 ### Reward Function
 #### Punctuation
 ##### Logarithm Scale
-$\dfrac{log(punt + 1)}{log(punt\_max} \in [0,1]$
+$\dfrac{log(punt + 1)}{log(punt{\_}max} \in [0,1]$
 ##### Linear Scale
 
 #### Weights
