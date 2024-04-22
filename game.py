@@ -82,13 +82,13 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
+                    if event.key in (pygame.K_UP, pygame.K_w):
                         return 'up'
-                    elif event.key == pygame.K_DOWN:
+                    elif event.key in (pygame.K_DOWN, pygame.K_s):
                         return 'down'
-                    elif event.key == pygame.K_LEFT:
+                    elif event.key in (pygame.K_LEFT, pygame.K_a):
                         return 'left'
-                    elif event.key == pygame.K_RIGHT:
+                    elif event.key in (pygame.K_RIGHT, pygame.K_d):
                         return 'right'
         return None
 
