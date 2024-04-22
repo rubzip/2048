@@ -32,7 +32,7 @@ $\displaystyle \dfrac{punt}{punt_{max})} \in [0,1]$
 #### Num of Zeros
 $\displaystyle \dfrac{num_{zeros}}{max_{zeros})} \in [0,1]$
 
-#### 
+#### Distribution
 $\displaystyle 2 - \frac{1}{N}\sum_{i=1}^{N}f_{i}$
 
 $\displaystyle \left \{ x_{i}: f_{i} \ \ \ \forall x_{i} \neq 0 \right \}$
