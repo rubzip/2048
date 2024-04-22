@@ -23,7 +23,7 @@ class Board:
         if not self.game_over:
             m = np.random.randint(n)
             i, j = indexes[0][m], indexes[1][m]
-            self.grid[i, j] = 2
+            self.grid[i, j] = 1
         
         if return_values:
             return self.game_over, self.grid
