@@ -4,6 +4,7 @@ from constants import *
 from datetime import datetime
 import os
 import csv
+import numpy as np
 
 
 class Game:
@@ -26,6 +27,8 @@ class Game:
         self.TIME_SLEEP = TIME_SLEEP
         self.START_TIME = datetime.now().strftime("%y%m%d%H%M%S")
         self.LOGS_FNAME = LOGS_FNAME
+
+        self.weights = weights
 
         self.board = Board()
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -93,7 +96,7 @@ class Game:
         return None
 
     def run(self):
-        while not self.board.game_over:
+        while (not self.board.game_over) and (not self.board.win):
             self.refresh_window()
             action = self.read_action()
             if action in self.board.possible_moves:
@@ -101,9 +104,34 @@ class Game:
                 self.board.add_2()
                 self.board.check_possible_moves()
                 self.board.is_game_over()
+                self.board.is_win()
+                self.logs.append([self.board.grid.reshape(-1), action, self.board.reward(10000, 8, self.weights)])
                 print(self.board.grid)
                 pygame.time.wait(self.TIME_SLEEP)
         self.save_logs()
+
+
+def reward(punctuation: int, win: bool, game_over: bool, grid: np.array, max_punctuation: int, max_zeros: int, weights: dict, logarithmic_punctuation: bool=True):
+    total_reward = 0.
+
+    if win:
+        total_reward += weights.get('win', 0)
+    elif game_over:
+        total_reward += weights.get('game over', 0)
+    
+    vals, freqs = np.unique(grid, return_counts=True)
+    num_zeros = freqs[vals==0].sum()
+    avg_freq = freqs[vals!=0].mean()
+
+    if logarithmic_punctuation:
+        total_reward += min(np.log(punctuation+1)/np.log(max_punctuation), 1) * weights.get('punctuation', 0)
+    else:
+        total_reward += min(punctuation/max_punctuation, 1) * weights.get('punctuation', 0)
+    
+    total_reward += min(num_zeros/max_zeros, 1) * weights.get('zeros', 0)
+    total_reward += min(2 - avg_freq, 1) * weights.get('distribution', 0)
+
+    return total_reward
 
 
 game = Game()

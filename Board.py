@@ -12,8 +12,12 @@ class Board:
 
         self.possible_moves, self.results = self.check_possible_moves(return_values=True)
         self.game_over = self.is_game_over(return_values=True)
+        self.win = self.is_win(return_values=True)
+
         self.POINTS = {n: (n-1)*(2**n) for n in range(1, 20)}
         self.POINTS[0] = 0
+
+        self.punctuation = self.get_punctuation(return_values=True)
     
     def add_2(self, return_values=False) -> bool:
         possible = self.grid==0
@@ -113,6 +117,11 @@ class Board:
         self.game_over = (len(self.possible_moves)==0)
         if return_values:
             return self.game_over
+    
+    def is_win(self, return_values=False, goal=11) -> bool:
+        self.win = (self.grid >= goal).any()
+        if return_values:
+            return self.win
 
     def move(self, movement: str, return_values=False):
         if movement in self.possible_moves:
@@ -122,3 +131,36 @@ class Board:
             print(f"Movement {movement} is not allowed, try with: {self.possible_moves}")
         if return_values:
             return self.grid
+    
+    def get_punctuation(self, return_values=False):
+        vals, freqs = np.unique(self.grid, return_counts=True)
+        self.punctuation = sum([self.POINTS.get(val, 0)*freq for val, freq in zip(vals, freqs)])
+
+        if return_values:
+            return self.punctuation
+
+
+    def reward(self, max_punctuation: int, max_zeros: int, weights: dict, logarithmic_punctuation: bool=True):
+        total_reward = 0.
+
+        if self.win:
+            total_reward += weights.get('win', 0)
+        elif self.game_over:
+            total_reward += weights.get('game over', 0)
+        
+        vals, freqs = np.unique(self.grid, return_counts=True)
+        num_zeros = freqs[vals==0].sum()
+        avg_freq = freqs[vals!=0].mean()
+
+        if logarithmic_punctuation:
+            total_reward += between_0_and_1(np.log(self.punctuation + 1)/np.log(max_punctuation)) * weights.get('punctuation', 0)
+        else:
+            total_reward += between_0_and_1(self.punctuation/max_punctuation) * weights.get('punctuation', 0)
+        
+        total_reward += between_0_and_1(num_zeros/max_zeros) * weights.get('zeros', 0)
+        total_reward += between_0_and_1(2 - avg_freq) * weights.get('distribution', 0)
+
+        return total_reward
+
+def between_0_and_1(num):
+    return max(0, min(1, num))

@@ -33,3 +33,11 @@ for i in range(1, 10):
 
 TIME_SLEEP = 30
 LOGS_FNAME = "logs"
+
+weights = {
+    "win": 50,
+    "game over": -50,
+    "punctuation": 50,
+    "zeros": 10,
+    "distribution": 10
+}
