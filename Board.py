@@ -1,4 +1,6 @@
 import numpy as np
+from tf_agents.trajectories import TimeStep 
+import tensorflow as tf
 
 class Board:
     def __init__(self, N: int=4, grid: np.array=None) -> None:
@@ -18,6 +20,7 @@ class Board:
         self.POINTS[0] = 0
 
         self.punctuation = self.get_punctuation(return_values=True)
+        self.t_step = 0
     
     def add_2(self, return_values=False) -> bool:
         possible = self.grid==0
@@ -139,8 +142,7 @@ class Board:
         if return_values:
             return self.punctuation
 
-
-    def reward(self, max_punctuation: int, max_zeros: int, weights: dict, logarithmic_punctuation: bool=True):
+    def get_reward(self, max_punctuation: int, max_zeros: int, weights: dict, logarithmic_punctuation: bool=True):
         total_reward = 0.
 
         if self.win:
@@ -161,6 +163,17 @@ class Board:
         total_reward += between_0_and_1(2 - avg_freq) * weights.get('distribution', 0)
 
         return total_reward
+    
+    def get_time_step(self):
+        discount = int(not (self.is_game_over() or self.is_win()))
+        
+        return TimeStep(
+            step_type=tf.constant(self.t_step),
+            reward=tf.constant(self.get_reward()),
+            discount=tf.constant(discount),
+            observation=self.grid.reshape(-1)
+        )
+
 
 def between_0_and_1(num):
     return max(0, min(1, num))
